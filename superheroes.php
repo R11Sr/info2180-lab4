@@ -1,5 +1,5 @@
 
-        <?php
+<?php
 
     $superheroes = [
       [
@@ -64,11 +64,50 @@
       ], 
     ];
 
+?>
+   
+    <?php
+        function checkHero($superheroes){
+           foreach ($superheroes as $superhero):
+            
+           if ($superhero['alias'] == filter_var($_GET['query'], FILTER_SANITIZE_STRING) || $superhero['name'] == filter_var($_GET['query'], FILTER_SANITIZE_STRING)):
+                    
+                    $heroData = [];
+                    $heroData['alias']= $superhero['alias'];
+                    $heroData['name'] = $superhero['name'];
+                    $heroData['biography'] = $superhero['biography'];
+
+                    return $heroData;
+
+                    
+                   
+            endif;
+            endforeach;
+        }
     ?>
-    <ul>
-    <?php foreach ($superheroes as $superhero): ?>
-      <li><?= $superhero['alias']; ?></li>
-    <?php endforeach; ?>
-    </ul>
     
+   <?php 
+   $result = checkHero($superheroes);
+   ?>
+
+ 
+
+   <?php if ($result): ?>
+
+        <?php 
+            $handover = [];
+            $handover['alias'] =  "<h3>{$result['alias']} </h3>";
+            $handover['name'] = "<h4>{$result['name']}</h4>";
+            $handover['biography'] = "<p>{$result['biography']}</p>";
+
+            echo json_encode($handover);
+
+        ?>
+
+        <?php else: ?>
+            <?php echo "SuperHero Not Found"?>
+    <?php endif ?>
+           
+            
+
 

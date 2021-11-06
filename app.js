@@ -2,8 +2,9 @@ window.addEventListener('load',(event) =>{
     const bttn = $("#Search");
 
 
-    // bttn.on("click",function(e){
 
+    // bttn.on("click",function(e){
+    //     e.preventDefault();
     //     $.ajax("superheroes.php",{
     //         method: "GET"
     //     }).done(function(response){
@@ -15,16 +16,28 @@ window.addEventListener('load',(event) =>{
     // });
 
 
-    bttn.on("click",function(e){
-        fetch("superheroes.php").then(response =>{
-            if (response.ok){
-               return response.text();
-            }
-            else {
-                alert("There was an error");
-            }
-        }).then(info =>{
-            alert(info);
-        }).catch(err =>console.log(`There was an error: ${err}`));
+    $("#searchForm").submit(function(event){
+        let Fdata = {
+            query: $("#look-up").val()
+        };
+
+        $.ajax({
+            type:"GET",
+            url:"superheroes.php",
+            data: Fdata,
+            dataType: 'html'
+        }).done(function(response){
+            let recv = JSON.parse(response);
+            $("#result").append(recv.alias);
+            $("#result").append(recv.name);
+            $("#result").append(recv.biography);
+          
+        }).fail(function(response){
+            alert("an Error has occured!");
+        }); 
+
+        event.preventDefault();
     });
+
+
 });
