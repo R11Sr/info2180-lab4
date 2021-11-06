@@ -105,7 +105,12 @@
         ?>
 
         <?php else: ?>
-            <?php echo "SuperHero Not Found"?>
+            <?php
+            $notFound = [];
+            $notFound['alias'] = "SuperHero Not Found";    
+            ?>
+            
+            <?php echo json_encode($notFound)?>
     <?php endif ?>
            
             

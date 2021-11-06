@@ -28,12 +28,14 @@ window.addEventListener('load',(event) =>{
             dataType: 'html'
         }).done(function(response){
             let recv = JSON.parse(response);
+            console.log(Object.keys(recv).length);
+            $("#result").empty();
             $("#result").append(recv.alias);
             $("#result").append(recv.name);
             $("#result").append(recv.biography);
           
         }).fail(function(response){
-            alert("an Error has occured!");
+            $("#result").append("<h2>Failed to obtain response from the server</h2>");
         }); 
 
         event.preventDefault();
